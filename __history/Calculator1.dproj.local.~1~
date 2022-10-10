@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.308,=C:\Users\Boldoed\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.328,=C:\Users\Boldoed\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.540,C:\Users\Boldoed\Documents\Embarcadero\Studio\Projects\Unit2.pas=C:\Users\Boldoed\Documents\Embarcadero\Studio\Projects\Info.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.587,=C:\Users\Boldoed\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.393,C:\Users\Boldoed\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Users\Boldoed\Documents\Embarcadero\Studio\Projects\Calculator.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.721,C:\Users\Boldoed\Documents\Embarcadero\Studio\Projects\Project1.dproj=C:\Users\Boldoed\Documents\Embarcadero\Studio\Projects\Calculator1.dproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.677,C:\Users\Boldoed\Desktop\CalculatorProject\Calculator.dfm=C:\Users\Boldoed\Desktop\CalcGit\Calculator.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.656,C:\Users\Boldoed\Desktop\CalculatorProject\Calculator.dfm=C:\Users\Boldoed\Documents\Embarcadero\Studio\Projects\Calculator.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.393,C:\Users\Boldoed\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Users\Boldoed\Documents\Embarcadero\Studio\Projects\Calculator.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.540,C:\Users\Boldoed\Documents\Embarcadero\Studio\Projects\Unit2.dfm=C:\Users\Boldoed\Documents\Embarcadero\Studio\Projects\Info.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.656,C:\Users\Boldoed\Desktop\CalculatorProject\Calculator.pas=C:\Users\Boldoed\Documents\Embarcadero\Studio\Projects\Calculator.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.677,C:\Users\Boldoed\Desktop\CalculatorProject\Calculator.pas=C:\Users\Boldoed\Desktop\CalcGit\Calculator.pas</Transaction>
+  </Transactions>
+</BorlandProject>

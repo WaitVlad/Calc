@@ -52,7 +52,7 @@ type
   end;
 
 type
-  TOperation = (Plus, Minus, Mult, Divis, Non);
+  TOperation = (Plus, Minus, Mult, Divis, None);
 
 var
   Form1: TForm1;
@@ -75,7 +75,7 @@ var
 procedure TForm1.Restart;
 begin
   Label1.Caption := ' ';
-  Oper := Non;
+  Oper := None;
   Res1 := ' ';
   Res2 := ' ';
   ResOperFlag := True;
@@ -88,7 +88,7 @@ begin
   if ResFlag = False then
   begin
     Label1.Caption := Label1.Caption + ((Sender as TButton).Caption);
-    if Oper = Non then
+    if Oper = None then
     begin
       Res1 := Res1 + ((Sender as TButton).Caption);
     end
@@ -102,7 +102,7 @@ end;
 
 procedure TForm1.ButtonPlusClick(Sender: TObject);
 begin
-  if (ResOperFlag = False) and (Oper = Non) then
+  if (ResOperFlag = False) and (Oper = None) then
   begin
     Oper := Plus;
     Label1.Caption := label1.Caption + ' + ';
@@ -122,7 +122,7 @@ begin
   end
   else
   begin
-    if Oper = Non then
+    if Oper = None then
     begin
       Oper := Minus;
       Label1.Caption := label1.Caption + ' - ';
@@ -143,7 +143,7 @@ end;
 
 procedure TForm1.ButtonMultClick(Sender: TObject);
 begin
-  if (ResOperFlag = False) and (Oper = Non) then
+  if (ResOperFlag = False) and (Oper = None) then
   begin
     Oper := Mult;
     Label1.Caption := label1.Caption + ' * ';
@@ -154,7 +154,7 @@ end;
 
 procedure TForm1.ButtonDivisClick(Sender: TObject);
 begin
-  if (ResOperFlag = False) and (Oper = Non) then
+  if (ResOperFlag = False) and (Oper = None) then
   begin
     Oper := Divis;
     Label1.Caption := label1.Caption + ' / ';
@@ -181,13 +181,11 @@ begin
     Mult:
       label1.Caption := 'Результат = ' + IntToStr(StrToInt(Res1) * StrToInt(Res2));
     Divis:
-      if (Res2 = ' 0') or (Res2 = ' -0') then
-      begin
-        ShowMessage('No');
-      end
-      else
-      begin
+      try
         label1.Caption := 'Результат = ' + FloatToStr(StrToInt(Res1) / StrToInt(Res2));
+      except
+        on EMathError: EZeroDivide do
+          MessageBox(Handle, 'Please don''t divide by zero', 'Zero Error', 0);
       end;
   end;
 end;

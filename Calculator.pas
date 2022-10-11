@@ -34,16 +34,6 @@ type
     N8: TMenuItem;
     N9: TMenuItem;
     N10: TMenuItem;
-    procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
-    procedure Button3Click(Sender: TObject);
-    procedure Button4Click(Sender: TObject);
-    procedure Button5Click(Sender: TObject);
-    procedure Button6Click(Sender: TObject);
-    procedure Button7Click(Sender: TObject);
-    procedure Button8Click(Sender: TObject);
-    procedure Button9Click(Sender: TObject);
-    procedure Button0Click(Sender: TObject);
     procedure ButtonCancelClick(Sender: TObject);
     procedure ButtonPlusClick(Sender: TObject);
     procedure ButtonResultClick(Sender: TObject);
@@ -53,11 +43,11 @@ type
     procedure N3Click(Sender: TObject);
     procedure N10Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure InsertNum(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
-    procedure IncertNum(Num: Integer);
     procedure Restart;
   end;
 
@@ -93,71 +83,21 @@ begin
   MinusOper := False;
 end;
 
-procedure TForm1.IncertNum(Num: Integer);
+procedure TForm1.InsertNum(Sender: TObject);
 begin
   if ResFlag = False then
   begin
-    Label1.Caption := Label1.Caption + IntToStr(Num);
+    Label1.Caption := Label1.Caption + ((Sender as TButton).Caption);
     if Oper = Non then
     begin
-      Res1 := Res1 + IntToStr(Num);
+      Res1 := Res1 + ((Sender as TButton).Caption);
     end
     else
     begin
-      Res2 := Res2 + IntToStr(Num);
+      Res2 := Res2 + ((Sender as TButton).Caption);
     end;
   end;
   ResOperFlag := False;
-end;
-
-procedure TForm1.Button1Click(Sender: TObject);
-begin
-  IncertNum(1);
-end;
-
-procedure TForm1.Button2Click(Sender: TObject);
-begin
-  IncertNum(2);
-end;
-
-procedure TForm1.Button3Click(Sender: TObject);
-begin
-  IncertNum(3);
-end;
-
-procedure TForm1.Button4Click(Sender: TObject);
-begin
-  IncertNum(4);
-end;
-
-procedure TForm1.Button5Click(Sender: TObject);
-begin
-  IncertNum(5);
-end;
-
-procedure TForm1.Button6Click(Sender: TObject);
-begin
-  IncertNum(6);
-end;
-
-procedure TForm1.Button7Click(Sender: TObject);
-begin
-  IncertNum(7);
-end;
-
-procedure TForm1.Button8Click(Sender: TObject);
-begin
-  IncertNum(8);
-end;
-
-procedure TForm1.Button9Click(Sender: TObject);
-begin
-  IncertNum(9);
-end;
-
-procedure TForm1.Button0Click(Sender: TObject);
-begin
-  IncertNum(0);
 end;
 
 procedure TForm1.ButtonPlusClick(Sender: TObject);

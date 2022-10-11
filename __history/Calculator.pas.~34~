@@ -57,6 +57,8 @@ type
     { Private declarations }
   public
     { Public declarations }
+    procedure IncertNum(Num: Integer);
+    procedure Restart;
   end;
 
 type
@@ -77,251 +79,182 @@ var
   Res2: string;
   Oper: TOperation;
   ResFlag: Boolean;
+  ResOperFlag: Boolean;
+  MinusOper: Boolean;
 
-procedure TForm1.Button1Click(Sender: TObject);
+procedure TForm1.Restart;
+begin
+  Label1.Caption := ' ';
+  Oper := Non;
+  Res1 := ' ';
+  Res2 := ' ';
+  ResOperFlag := True;
+  ResFlag := False;
+  MinusOper := False;
+end;
+
+procedure TForm1.IncertNum(Num: Integer);
 begin
   if ResFlag = False then
   begin
-    Label1.Caption := Label1.Caption + IntToStr(1);
+    Label1.Caption := Label1.Caption + IntToStr(Num);
     if Oper = Non then
     begin
-      Res1 := Res1 + IntToStr(1);
+      Res1 := Res1 + IntToStr(Num);
     end
     else
     begin
-      Res2 := Res2 + IntToStr(1);
+      Res2 := Res2 + IntToStr(Num);
     end;
   end;
+  ResOperFlag := False;
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  IncertNum(1);
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
 begin
-  if ResFlag = False then
-  begin
-    Label1.Caption := Label1.Caption + IntToStr(2);
-    if Oper = Non then
-    begin
-      Res1 := Res1 + IntToStr(2);
-    end
-    else
-    begin
-      Res2 := Res2 + IntToStr(2);
-    end;
-  end;
+  IncertNum(2);
 end;
 
 procedure TForm1.Button3Click(Sender: TObject);
 begin
-  if ResFlag = False then
-  begin
-    Label1.Caption := Label1.Caption + IntToStr(3);
-    if Oper = Non then
-    begin
-      Res1 := Res1 + IntToStr(3);
-    end
-    else
-    begin
-      Res2 := Res2 + IntToStr(3);
-    end;
-  end;
+  IncertNum(3);
 end;
 
 procedure TForm1.Button4Click(Sender: TObject);
 begin
-  if ResFlag = False then
-  begin
-    Label1.Caption := Label1.Caption + IntToStr(4);
-    if Oper = Non then
-    begin
-      Res1 := Res1 + IntToStr(4);
-    end
-    else
-    begin
-      Res2 := Res2 + IntToStr(4);
-    end;
-  end;
+  IncertNum(4);
 end;
 
 procedure TForm1.Button5Click(Sender: TObject);
 begin
-  if ResFlag = False then
-  begin
-    Label1.Caption := Label1.Caption + IntToStr(5);
-    if Oper = Non then
-    begin
-      Res1 := Res1 + IntToStr(5);
-    end
-    else
-    begin
-      Res2 := Res2 + IntToStr(5);
-    end;
-  end;
+  IncertNum(5);
 end;
 
 procedure TForm1.Button6Click(Sender: TObject);
 begin
-  if ResFlag = False then
-  begin
-    Label1.Caption := Label1.Caption + IntToStr(6);
-    if Oper = Non then
-    begin
-      Res1 := Res1 + IntToStr(6);
-    end
-    else
-    begin
-      Res2 := Res2 + IntToStr(6);
-    end;
-  end;
+  IncertNum(6);
 end;
 
 procedure TForm1.Button7Click(Sender: TObject);
 begin
-  if ResFlag = False then
-  begin
-    Label1.Caption := Label1.Caption + IntToStr(7);
-    if Oper = Non then
-    begin
-      Res1 := Res1 + IntToStr(7);
-    end
-    else
-    begin
-      Res2 := Res2 + IntToStr(7);
-    end;
-  end;
+  IncertNum(7);
 end;
 
 procedure TForm1.Button8Click(Sender: TObject);
 begin
-  if ResFlag = False then
-  begin
-    Label1.Caption := Label1.Caption + IntToStr(8);
-    if Oper = Non then
-    begin
-      Res1 := Res1 + IntToStr(8);
-    end
-    else
-    begin
-      Res2 := Res2 + IntToStr(8);
-    end;
-  end;
+  IncertNum(8);
 end;
 
 procedure TForm1.Button9Click(Sender: TObject);
 begin
-  if ResFlag = False then
-  begin
-    Label1.Caption := Label1.Caption + IntToStr(9);
-    if Oper = Non then
-    begin
-      Res1 := Res1 + IntToStr(9);
-    end
-    else
-    begin
-      Res2 := Res2 + IntToStr(9);
-    end;
-  end;
+  IncertNum(9);
 end;
 
 procedure TForm1.Button0Click(Sender: TObject);
 begin
-  if ResFlag = False then
-  begin
-    Label1.Caption := Label1.Caption + IntToStr(0);
-    if Oper = Non then
-    begin
-      Res1 := Res1 + IntToStr(0);
-    end
-    else
-    begin
-      Res2 := Res2 + IntToStr(0);
-    end;
-  end;
+  IncertNum(0);
 end;
 
 procedure TForm1.ButtonPlusClick(Sender: TObject);
 begin
-  if ResFlag = False then
+  if (ResOperFlag = False) and (Oper = Non) then
   begin
     Oper := Plus;
     Label1.Caption := label1.Caption + ' + ';
+    ResOperFlag := True;
+    MinusOper := True;
   end;
 end;
 
 procedure TForm1.ButtonMinusClick(Sender: TObject);
 begin
-  if (Res1[1] = ' ') then
+  if (Res1 = ' ') then
   begin
-    if ResFlag = False then
-    begin
-      Oper := Minus;
-      Label1.Caption := label1.Caption + '-';
-    end;
+    Label1.Caption := label1.Caption + '-';
+    Res1[1] := '-';
+    ResOperFlag := False;
+    MinusOper := False;
   end
   else
   begin
-    if ResFlag = False then
+    if Oper = Non then
     begin
       Oper := Minus;
       Label1.Caption := label1.Caption + ' - ';
+      MinusOper := True;
+    end
+    else
+    begin
+      if (MinusOper = True) and (Res2 = ' ') then
+      begin
+        Label1.Caption := label1.Caption + '-';
+        Res2[1] := '-';
+        MinusOper := False;
+        ResOperFlag := False;
+      end;
     end;
   end;
 end;
 
 procedure TForm1.ButtonMultClick(Sender: TObject);
 begin
-  if ResFlag = False then
+  if (ResOperFlag = False) and (Oper = Non) then
   begin
     Oper := Mult;
     Label1.Caption := label1.Caption + ' * ';
+    ResOperFlag := True;
+    MinusOper := True;
   end;
 end;
 
 procedure TForm1.ButtonDivisClick(Sender: TObject);
 begin
-  if ResFlag = False then
+  if (ResOperFlag = False) and (Oper = Non) then
   begin
     Oper := Divis;
     Label1.Caption := label1.Caption + ' / ';
+    ResOperFlag := True;
+    MinusOper := True;
   end;
 end;
 
 procedure TForm1.ButtonCancelClick(Sender: TObject);
 begin
-  Label1.Caption := ' ';
-  Oper := Non;
-  Res1 := ' ';
-  Res2 := ' ';
-  ResFlag := False;
+  Restart;
 end;
 
 procedure TForm1.ButtonResultClick(Sender: TObject);
 begin
   ResFlag := True;
+  ResOperFlag := True;
+  MinusOper := False;
   case Oper of
     Plus:
       label1.Caption := 'Результат = ' + IntToStr(StrToInt(Res1) + StrToInt(Res2));
     Minus:
-      if Res1[1] = '-' then
-      begin
-        label1.Caption := 'Результат = -' + IntToStr(StrToInt(Res1) - StrToInt(Res2));
-      end
-      else
-      begin
-        label1.Caption := 'Результат = -' + IntToStr(StrToInt(Res1) - StrToInt(Res2));
-      end;
+      label1.Caption := 'Результат = ' + IntToStr(StrToInt(Res1) - StrToInt(Res2));
     Mult:
       label1.Caption := 'Результат = ' + IntToStr(StrToInt(Res1) * StrToInt(Res2));
     Divis:
-      label1.Caption := 'Результат = ' + FloatToStr(StrToInt(Res1) / StrToInt(Res2));
+      if (Res2 = ' 0') or (Res2 = ' -0') then
+      begin
+        ShowMessage('No');
+      end
+      else
+      begin
+        label1.Caption := 'Результат = ' + FloatToStr(StrToInt(Res1) / StrToInt(Res2));
+      end;
   end;
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  Res1 := ' ';
-  Res2 := ' ';
-  Oper := Non;
-  ResFlag := False;
+  Restart;
 end;
 
 procedure TForm1.N10Click(Sender: TObject);

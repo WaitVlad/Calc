@@ -27,7 +27,7 @@ object Form1: TForm1
     Height = 66
     Caption = '1'
     TabOrder = 0
-    OnClick = Button1Click
+    OnClick = InsertNum
   end
   object Button2: TButton
     Left = 103
@@ -36,7 +36,7 @@ object Form1: TForm1
     Height = 66
     Caption = '2'
     TabOrder = 1
-    OnClick = Button2Click
+    OnClick = InsertNum
   end
   object ButtonPlus: TButton
     Left = 293
@@ -72,7 +72,7 @@ object Form1: TForm1
     Height = 66
     Caption = '3'
     TabOrder = 5
-    OnClick = Button3Click
+    OnClick = InsertNum
   end
   object Button4: TButton
     Left = 8
@@ -81,7 +81,7 @@ object Form1: TForm1
     Height = 66
     Caption = '4'
     TabOrder = 6
-    OnClick = Button4Click
+    OnClick = InsertNum
   end
   object Button5: TButton
     Left = 103
@@ -90,7 +90,7 @@ object Form1: TForm1
     Height = 66
     Caption = '5'
     TabOrder = 7
-    OnClick = Button5Click
+    OnClick = InsertNum
   end
   object Button6: TButton
     Left = 198
@@ -99,7 +99,7 @@ object Form1: TForm1
     Height = 66
     Caption = '6'
     TabOrder = 8
-    OnClick = Button6Click
+    OnClick = InsertNum
   end
   object Button7: TButton
     Left = 8
@@ -108,7 +108,7 @@ object Form1: TForm1
     Height = 66
     Caption = '7'
     TabOrder = 9
-    OnClick = Button7Click
+    OnClick = InsertNum
   end
   object Button8: TButton
     Left = 103
@@ -117,7 +117,7 @@ object Form1: TForm1
     Height = 66
     Caption = '8'
     TabOrder = 10
-    OnClick = Button8Click
+    OnClick = InsertNum
   end
   object Button9: TButton
     Left = 198
@@ -126,7 +126,7 @@ object Form1: TForm1
     Height = 66
     Caption = '9'
     TabOrder = 11
-    OnClick = Button9Click
+    OnClick = InsertNum
   end
   object Button0: TButton
     Left = 8
@@ -135,7 +135,7 @@ object Form1: TForm1
     Height = 66
     Caption = '0'
     TabOrder = 12
-    OnClick = Button0Click
+    OnClick = InsertNum
   end
   object ButtonMinus: TButton
     Left = 293

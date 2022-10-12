@@ -1,24 +1,40 @@
 object Form1: TForm1
   Left = 0
   Top = 0
+  BorderStyle = bsSingle
   Caption = 'Calculator 1.0.1'
-  ClientHeight = 336
-  ClientWidth = 504
+  ClientHeight = 465
+  ClientWidth = 497
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  KeyPreview = True
   Menu = MainMenu1
   ShowHint = True
   OnCreate = FormCreate
+  OnKeyPress = FormKeyPress
   TextHeight = 15
   object Label1: TLabel
-    Left = 8
-    Top = 8
-    Width = 3
+    Left = 0
+    Top = 0
+    Width = 497
     Height = 15
+    Align = alTop
+    Caption = ' '
+    ExplicitWidth = 3
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 21
+    Width = 505
+    Height = 331
+    Align = alCustom
+    Ctl3D = True
+    ParentCtl3D = False
+    TabOrder = 16
   end
   object Button1: TButton
     Left = 8
@@ -43,9 +59,9 @@ object Form1: TForm1
     Top = 39
     Width = 116
     Height = 66
-    Caption = 'Plus'
+    Caption = '+'
     TabOrder = 2
-    OnClick = ButtonPlusClick
+    OnClick = ButtonOperatorClick
   end
   object ButtonCancel: TButton
     Left = 413
@@ -142,48 +158,48 @@ object Form1: TForm1
     Top = 111
     Width = 116
     Height = 66
-    Caption = 'Minus'
+    Caption = '-'
     TabOrder = 13
-    OnClick = ButtonMinusClick
+    OnClick = ButtonOperatorClick
   end
   object ButtonMult: TButton
-    Left = 293
+    Left = 291
     Top = 183
     Width = 116
     Height = 66
-    Caption = 'Multiplication'
+    Caption = '*'
     TabOrder = 14
-    OnClick = ButtonMultClick
+    OnClick = ButtonOperatorClick
   end
   object ButtonDiv: TButton
     Left = 293
     Top = 255
     Width = 116
     Height = 66
-    Caption = 'Division'
+    Caption = '/'
     TabOrder = 15
-    OnClick = ButtonDivisClick
+    OnClick = ButtonOperatorClick
   end
   object MainMenu1: TMainMenu
-    Left = 416
-    Top = 136
+    Left = 8
+    Top = 324
     object N1: TMenuItem
       Caption = #1042#1099#1087#1086#1083#1085#1080#1090#1100
       object N4: TMenuItem
         Caption = #1057#1083#1086#1078#1077#1085#1080#1077
-        OnClick = ButtonPlusClick
+        OnClick = N4Click
       end
       object N5: TMenuItem
         Caption = #1042#1099#1095#1080#1090#1072#1085#1080#1077
-        OnClick = ButtonMinusClick
+        OnClick = N5Click
       end
       object N6: TMenuItem
         Caption = #1059#1084#1085#1086#1078#1077#1085#1080#1077
-        OnClick = ButtonMultClick
+        OnClick = N6Click
       end
       object N7: TMenuItem
         Caption = #1044#1077#1083#1077#1085#1080#1077
-        OnClick = ButtonDivisClick
+        OnClick = N7Click
       end
       object N8: TMenuItem
         Caption = #1057#1090#1077#1088#1077#1090#1100
@@ -205,5 +221,18 @@ object Form1: TForm1
       Caption = #1042#1099#1093#1086#1076
       OnClick = N3Click
     end
+    object N11: TMenuItem
+      Caption = '                                                             '
+      Enabled = False
+    end
+    object TimeLine: TMenuItem
+      Enabled = False
+    end
+  end
+  object Timer1: TTimer
+    Interval = 1
+    OnTimer = Timer1Timer
+    Left = 456
+    Top = 352
   end
 end

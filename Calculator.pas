@@ -106,6 +106,7 @@ begin
   ResFlag := False;
   MinusOper := False;
   ResultCheckFlag := False;
+  ButtonResult.Enabled := False;
 end;
 
 procedure TForm1.ResultCheck;
@@ -136,6 +137,7 @@ begin
     else
     begin
       Res2 := Res2 + Key;
+      ButtonResult.Enabled := True;
     end;
   end;
   if (StopOperFlag = False) and (CharInSet(Key, ['+', '-', '*', '/'])) then
@@ -156,6 +158,7 @@ begin
     else
     begin
       Res2 := Res2 + ((Sender as TButton).Caption);
+      ButtonResult.Enabled := True;
     end;
   end;
   StopOperFlag := False;
@@ -352,8 +355,8 @@ begin
   begin
     FreshDataArray[a] := o;
     ResultCount := Resultcount + 1;
-  end
-  else
+  end;
+  if FreshDataArray[4] <> nil then
   begin
     DataWrite;
     DataArrayClean;

@@ -67,13 +67,15 @@ type
     constructor Create(NewExactTime, NewOperant1, NewTOperator, NewOperand2, NewResult: string); overload;
     constructor Create(NewAllInformation: string); overload;
     procedure DataArrayAdd(o: TData; a: integer);
+    class procedure DataWrite;
+    class procedure DataArrayClean;
   private
   end;
 
 type
   TOperation = (Plus, Minus, Mult, Divis, None);
 
-  DataArray = array of TData;
+  DataArray = array[0..4] of TData;
 
 var
   Form1: TForm1;
@@ -92,6 +94,7 @@ var
   Resultcount: Integer;
   FreshDataArray: DataArray;
   o: TData;
+  F: TextFile;
 
 procedure TForm1.Restart;
 begin
@@ -103,7 +106,6 @@ begin
   ResFlag := False;
   MinusOper := False;
   ResultCheckFlag := False;
-  Resultcount := 0;
 end;
 
 procedure TForm1.ResultCheck;
@@ -247,23 +249,23 @@ begin
     Plus:
       begin
         label1.Caption := 'Result =' + IntToStr(StrToInt64(TrimLeft(Res1)) + StrToInt64(TrimLeft(Res2)));
-        Operators := '+';
+        Operators := ' + ';
       end;
     Minus:
       begin
         label1.Caption := 'Result =' + IntToStr(StrToInt64(TrimLeft(Res1)) - StrToInt64(TrimLeft(Res2)));
-        Operators := '-';
+        Operators := ' - ';
       end;
     Mult:
       begin
         label1.Caption := 'Result =' + IntToStr(StrToInt64(TrimLeft(Res1)) * StrToInt64(TrimLeft(Res2)));
-        Operators := '*';
+        Operators := ' * ';
       end;
     Divis:
       begin
         try
           label1.Caption := 'Result =' + FloatToStr(StrToInt64(TrimLeft(Res1)) / StrToInt64(TrimLeft(Res2)));
-          Operators := '/';
+          Operators := ' / ';
         except
           on EMathError: EZeroDivide do
             MessageBox(Handle, 'Please don''t divide by zero', 'Zero Error', 0);
@@ -274,9 +276,7 @@ begin
   Delete(A, 1, 7);
   Time := StringReplace(MaskEdit1.Text, ' ', '0', [rfReplaceAll, rfIgnoreCase]);
   o := TData.Create(Time, Res1, Operators, TrimLeft(Res2), A);
-  o.DataArrayAdd(o, 0);
-  Inc(Resultcount);
-  Showmessage(o.ExactTime);
+  o.DataArrayAdd(o, Resultcount);
 end;
 
 procedure TForm1.ButtonResultClick(Sender: TObject);
@@ -287,7 +287,17 @@ end;
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   Restart;
-  SetLength(FreshDataArray, 1);
+  Resultcount := 0;
+  TData.DataArrayClean;
+  if FileExists('Log.txt') then
+  begin
+    AssignFile(f, 'Log.txt');
+  end
+  else
+  begin
+    Rewrite(f, 'Log.txt');
+    CloseFile(f);
+  end;
 end;
 
 procedure TForm1.N10Click(Sender: TObject);
@@ -338,7 +348,50 @@ end;
 
 procedure TData.DataArrayAdd(o: TData; a: integer);
 begin
-  FreshDataArray[a] := o;
+  if ResultCount < 5 then
+  begin
+    FreshDataArray[a] := o;
+    ResultCount := Resultcount + 1;
+  end
+  else
+  begin
+    DataWrite;
+    DataArrayClean;
+    Resultcount := 0;
+  end;
+end;
+
+class procedure TData.DataArrayClean;
+var
+  I: Integer;
+begin
+  for I := 0 to 4 do
+    FreshDataArray[I] := nil;
+end;
+
+class procedure TData.DataWrite;
+var
+  I: Integer;
+  ExFileData: string;
+begin
+  for I := 0 to 4 do
+  begin
+    ExFileData := '"' + FreshDataArray[I].ExactTime + ':' + FreshDataArray[I].Operant1 + FreshDataArray[I].TOperator + FreshDataArray[I].Operand2 + ' ' + FreshDataArray[I].Result + '"';
+    if FileExists('Log.txt') then
+    begin
+      AssignFile(f, 'Log.txt');
+      Append(f);
+      WriteLn(f, ExFileData);
+      Close(f);
+    end
+    else
+    begin
+      Rewrite(f, 'Log.txt');
+      Append(f);
+      WriteLn(f, ExFileData);
+      Close(f);
+    end;
+  end;
 end;
 
 end.

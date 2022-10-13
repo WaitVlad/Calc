@@ -3,8 +3,8 @@ object Form1: TForm1
   Top = 0
   BorderStyle = bsSingle
   Caption = 'Calculator 1.0.1'
-  ClientHeight = 465
-  ClientWidth = 497
+  ClientHeight = 350
+  ClientWidth = 490
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,17 +20,24 @@ object Form1: TForm1
   object Label1: TLabel
     Left = 0
     Top = 0
-    Width = 497
-    Height = 15
-    Align = alTop
+    Width = 4
+    Height = 18
+    Align = alCustom
+    BiDiMode = bdLeftToRight
     Caption = ' '
-    ExplicitWidth = 3
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Arial Rounded MT Bold'
+    Font.Style = []
+    ParentBiDiMode = False
+    ParentFont = False
   end
   object Panel1: TPanel
     Left = 0
-    Top = 21
+    Top = 24
     Width = 505
-    Height = 331
+    Height = 362
     Align = alCustom
     Ctl3D = True
     ParentCtl3D = False
@@ -38,7 +45,7 @@ object Form1: TForm1
   end
   object Button1: TButton
     Left = 8
-    Top = 39
+    Top = 31
     Width = 89
     Height = 66
     Caption = '1'
@@ -47,7 +54,7 @@ object Form1: TForm1
   end
   object Button2: TButton
     Left = 103
-    Top = 39
+    Top = 31
     Width = 89
     Height = 66
     Caption = '2'
@@ -56,7 +63,7 @@ object Form1: TForm1
   end
   object ButtonPlus: TButton
     Left = 293
-    Top = 39
+    Top = 31
     Width = 116
     Height = 66
     Caption = '+'
@@ -65,7 +72,7 @@ object Form1: TForm1
   end
   object ButtonCancel: TButton
     Left = 413
-    Top = 183
+    Top = 175
     Width = 66
     Height = 138
     Caption = 'Cancel'
@@ -74,7 +81,7 @@ object Form1: TForm1
   end
   object ButtonResult: TButton
     Left = 151
-    Top = 255
+    Top = 247
     Width = 136
     Height = 66
     Caption = '='
@@ -83,7 +90,7 @@ object Form1: TForm1
   end
   object Button3: TButton
     Left = 198
-    Top = 39
+    Top = 31
     Width = 89
     Height = 66
     Caption = '3'
@@ -92,7 +99,7 @@ object Form1: TForm1
   end
   object Button4: TButton
     Left = 8
-    Top = 111
+    Top = 103
     Width = 89
     Height = 66
     Caption = '4'
@@ -101,7 +108,7 @@ object Form1: TForm1
   end
   object Button5: TButton
     Left = 103
-    Top = 111
+    Top = 103
     Width = 89
     Height = 66
     Caption = '5'
@@ -110,7 +117,7 @@ object Form1: TForm1
   end
   object Button6: TButton
     Left = 198
-    Top = 111
+    Top = 103
     Width = 89
     Height = 66
     Caption = '6'
@@ -119,7 +126,7 @@ object Form1: TForm1
   end
   object Button7: TButton
     Left = 8
-    Top = 183
+    Top = 175
     Width = 89
     Height = 66
     Caption = '7'
@@ -128,7 +135,7 @@ object Form1: TForm1
   end
   object Button8: TButton
     Left = 103
-    Top = 183
+    Top = 175
     Width = 89
     Height = 66
     Caption = '8'
@@ -137,7 +144,7 @@ object Form1: TForm1
   end
   object Button9: TButton
     Left = 198
-    Top = 183
+    Top = 175
     Width = 89
     Height = 66
     Caption = '9'
@@ -146,7 +153,7 @@ object Form1: TForm1
   end
   object Button0: TButton
     Left = 8
-    Top = 255
+    Top = 247
     Width = 137
     Height = 66
     Caption = '0'
@@ -155,7 +162,7 @@ object Form1: TForm1
   end
   object ButtonMinus: TButton
     Left = 293
-    Top = 111
+    Top = 103
     Width = 116
     Height = 66
     Caption = '-'
@@ -164,7 +171,7 @@ object Form1: TForm1
   end
   object ButtonMult: TButton
     Left = 291
-    Top = 183
+    Top = 175
     Width = 116
     Height = 66
     Caption = '*'
@@ -173,12 +180,31 @@ object Form1: TForm1
   end
   object ButtonDiv: TButton
     Left = 293
-    Top = 255
+    Top = 247
     Width = 116
     Height = 66
     Caption = '/'
     TabOrder = 15
     OnClick = ButtonOperatorClick
+  end
+  object MaskEdit1: TMaskEdit
+    Left = 413
+    Top = -3
+    Width = 116
+    Height = 23
+    TabStop = False
+    Color = cl3DLight
+    Enabled = False
+    EditMask = '!90:00:00:>LL;1;0'
+    Font.Charset = RUSSIAN_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Segoe UI Black'
+    Font.Style = [fsBold]
+    MaxLength = 11
+    ParentFont = False
+    TabOrder = 17
+    Text = '  :  :  :  '
   end
   object MainMenu1: TMainMenu
     Left = 8
@@ -220,13 +246,6 @@ object Form1: TForm1
     object N3: TMenuItem
       Caption = #1042#1099#1093#1086#1076
       OnClick = N3Click
-    end
-    object N11: TMenuItem
-      Caption = '                                                             '
-      Enabled = False
-    end
-    object TimeLine: TMenuItem
-      Enabled = False
     end
   end
   object Timer1: TTimer

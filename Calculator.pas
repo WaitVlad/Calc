@@ -5,7 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
-  Vcl.StdCtrls, Vcl.Menus, Vcl.ExtCtrls;
+  Vcl.StdCtrls, Vcl.Menus, Vcl.ExtCtrls, Vcl.PlatformDefaultStyleActnCtrls,
+  Vcl.ActnPopup, Vcl.Mask;
 
 type
   TForm1 = class(TForm)
@@ -35,9 +36,8 @@ type
     N10: TMenuItem;
     Label1: TLabel;
     Panel1: TPanel;
-    TimeLine: TMenuItem;
-    N11: TMenuItem;
     Timer1: TTimer;
+    MaskEdit1: TMaskEdit;
     procedure ButtonCancelClick(Sender: TObject);
     procedure ButtonOperatorClick(Sender: TObject);
     procedure ButtonResultClick(Sender: TObject);
@@ -58,14 +58,27 @@ type
     procedure Restart;
     procedure Operation(OperatorChar: string);
     procedure ResultCheck;
+    procedure ResutFind;
+  end;
+
+  TData = class
+  public
+    ExactTime, Operant1, TOperator, Operand2, Result, AllInformation: string;
+    constructor Create(NewExactTime, NewOperant1, NewTOperator, NewOperand2, NewResult: string); overload;
+    constructor Create(NewAllInformation: string); overload;
+    procedure DataArrayAdd(o: TData; a: integer);
+    class procedure DataWrite;
+    class procedure DataArrayClean;
+  private
   end;
 
 type
   TOperation = (Plus, Minus, Mult, Divis, None);
 
+  DataArray = array[0..4] of TData;
+
 var
   Form1: TForm1;
-  TimeValue : TLabel;
 
 implementation
 
@@ -75,14 +88,13 @@ uses
   Unit2;
 
 var
-  Res1: string;
-  Res2: string;
+  Res1, Res2: string;
   Oper: TOperation;
-  ResFlag: Boolean;
-  StopOperFlag: Boolean;
-  MinusOper: Boolean;
-  ResultCheckFlag: Boolean;
-
+  ResFlag, StopOperFlag, MinusOper, ResultCheckFlag: Boolean;
+  Resultcount: Integer;
+  FreshDataArray: DataArray;
+  o: TData;
+  F: TextFile;
 
 procedure TForm1.Restart;
 begin
@@ -102,13 +114,12 @@ begin
     Restart;
 end;
 
-
 procedure TForm1.Timer1Timer(Sender: TObject);
 var
-RealTime : TDateTime;
+  RealTime: TDateTime;
 begin
   RealTime := Time;
-  TimeLine.Caption := (FormatDateTime('h:n:s:z', RealTime));
+  MaskEdit1.Text := (FormatDateTime('h:n:s:z', RealTime));
 end;
 
 procedure TForm1.FormKeyPress(Sender: TObject; var Key: Char);
@@ -226,7 +237,9 @@ begin
   Operation((Sender as TButton).Caption);
 end;
 
-procedure TForm1.ButtonResultClick(Sender: TObject);
+procedure TForm1.ResutFind;
+var
+  A, Operators, Time: string;
 begin
   ResFlag := True;
   StopOperFlag := True;
@@ -234,24 +247,57 @@ begin
   ResultCheckFlag := True;
   case Oper of
     Plus:
-      label1.Caption := 'Result = ' + IntToStr(StrToInt(Res1) + StrToInt(Res2));
+      begin
+        label1.Caption := 'Result =' + IntToStr(StrToInt64(TrimLeft(Res1)) + StrToInt64(TrimLeft(Res2)));
+        Operators := ' + ';
+      end;
     Minus:
-      label1.Caption := 'Result = ' + IntToStr(StrToInt(Res1) - StrToInt(Res2));
+      begin
+        label1.Caption := 'Result =' + IntToStr(StrToInt64(TrimLeft(Res1)) - StrToInt64(TrimLeft(Res2)));
+        Operators := ' - ';
+      end;
     Mult:
-      label1.Caption := 'Result = ' + IntToStr(StrToInt(Res1) * StrToInt(Res2));
+      begin
+        label1.Caption := 'Result =' + IntToStr(StrToInt64(TrimLeft(Res1)) * StrToInt64(TrimLeft(Res2)));
+        Operators := ' * ';
+      end;
     Divis:
-      try
-        label1.Caption := 'Result = ' + FloatToStr(StrToInt(Res1) / StrToInt(Res2));
-      except
-        on EMathError: EZeroDivide do
-          MessageBox(Handle, 'Please don''t divide by zero', 'Zero Error', 0);
+      begin
+        try
+          label1.Caption := 'Result =' + FloatToStr(StrToInt64(TrimLeft(Res1)) / StrToInt64(TrimLeft(Res2)));
+          Operators := ' / ';
+        except
+          on EMathError: EZeroDivide do
+            MessageBox(Handle, 'Please don''t divide by zero', 'Zero Error', 0);
+        end;
       end;
   end;
+  A := Label1.Caption;
+  Delete(A, 1, 7);
+  Time := StringReplace(MaskEdit1.Text, ' ', '0', [rfReplaceAll, rfIgnoreCase]);
+  o := TData.Create(Time, Res1, Operators, TrimLeft(Res2), A);
+  o.DataArrayAdd(o, Resultcount);
+end;
+
+procedure TForm1.ButtonResultClick(Sender: TObject);
+begin
+  ResutFind;
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   Restart;
+  Resultcount := 0;
+  TData.DataArrayClean;
+  if FileExists('Log.txt') then
+  begin
+    AssignFile(f, 'Log.txt');
+  end
+  else
+  begin
+    Rewrite(f, 'Log.txt');
+    CloseFile(f);
+  end;
 end;
 
 procedure TForm1.N10Click(Sender: TObject);
@@ -282,6 +328,70 @@ end;
 procedure TForm1.N7Click(Sender: TObject);
 begin
   Operation('/');
+end;
+
+{ TData }
+
+constructor TData.Create(NewExactTime, NewOperant1, NewTOperator, NewOperand2, NewResult: string);
+begin
+  ExactTime := NewExactTime;
+  Operant1 := NewOperant1;
+  TOperator := NewTOperator;
+  Operand2 := NewOperand2;
+  Result := NewResult;
+end;
+
+constructor TData.Create(NewAllInformation: string);
+begin
+  AllInformation := NewAllInformation;
+end;
+
+procedure TData.DataArrayAdd(o: TData; a: integer);
+begin
+  if ResultCount < 5 then
+  begin
+    FreshDataArray[a] := o;
+    ResultCount := Resultcount + 1;
+  end
+  else
+  begin
+    DataWrite;
+    DataArrayClean;
+    Resultcount := 0;
+  end;
+end;
+
+class procedure TData.DataArrayClean;
+var
+  I: Integer;
+begin
+  for I := 0 to 4 do
+    FreshDataArray[I] := nil;
+end;
+
+class procedure TData.DataWrite;
+var
+  I: Integer;
+  ExFileData: string;
+begin
+  for I := 0 to 4 do
+  begin
+    ExFileData := '"' + FreshDataArray[I].ExactTime + ':' + FreshDataArray[I].Operant1 + FreshDataArray[I].TOperator + FreshDataArray[I].Operand2 + ' ' + FreshDataArray[I].Result + '"';
+    if FileExists('Log.txt') then
+    begin
+      AssignFile(f, 'Log.txt');
+      Append(f);
+      WriteLn(f, ExFileData);
+      Close(f);
+    end
+    else
+    begin
+      Rewrite(f, 'Log.txt');
+      Append(f);
+      WriteLn(f, ExFileData);
+      Close(f);
+    end;
+  end;
 end;
 
 end.
